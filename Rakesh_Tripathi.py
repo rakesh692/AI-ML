@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score
 
 df = pd.read_csv('./pulsar_star_dataset.csv')
 df.head()                                                           # reading the dataset
-
+#data.fillna(data.mean(), inplace=True)
 X = df.drop('Class', axis=1)
 y = df['Class']                                                                                     # splitting the dataset into features and labels
 X = X.to_numpy()
@@ -23,6 +23,9 @@ std_train = X_train.std()
 #########################################    code to be filled part a(i)
 --------------------------------------                                                          # Fill up this '----------' section
 --------------------------------------                                                          # Fill up this '----------' section
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 #########################################    End
 
 class SVM(object):
@@ -88,6 +91,7 @@ class SVM(object):
             --------------------------                                                             # Fill up this '----------' section
             --------------------------                                                             # Fill up this '----------' section
             ##############################              End
+            np.sign(np.dot(X, self.w) + self.b).flatten()
         else:
             y_predict = np.sum(self.a * self.y_support_vectors * self.kernel(self, X, self.support_vectors.T), axis=1)  # if not linear, then the prediction is given by the kernel modification to the standard linear version
             #########################################    code to be filled a(iv)
